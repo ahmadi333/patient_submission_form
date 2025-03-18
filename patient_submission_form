@@ -1,0 +1,1006 @@
+
+// Shortcode to display the patient submission form
+function patient_submission_form() {
+    ob_start();
+    ?>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Form Container */
+        .patient-form {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-family: Arial, sans-serif;
+        }
+
+        /* Headings */
+        .patient-form h3 {
+            color: #333;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #0073aa;
+            padding-bottom: 5px;
+        }
+
+        .patient-form h4 {
+            color: #555;
+            margin: 10px 0 5px;
+        }
+
+        /* Flex Container for Inline Fields */
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .form-row .field {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* Full Width Fields */
+        .full-width {
+            width: 100%;
+        }
+
+        /* Labels */
+        .patient-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        /* Inputs, Selects, Textareas */
+        .patient-form input[type="text"],
+        .patient-form input[type="number"],
+        .patient-form input[type="datetime-local"],
+        .patient-form select,
+        .patient-form textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .patient-form textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .patient-form select[multiple] {
+            height: 120px;
+        }
+
+        /* Radio and Checkbox */
+        .patient-form input[type="radio"],
+        .patient-form input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .patient-form .radio-group,
+        .patient-form .checkbox-group {
+            margin-bottom: 15px;
+        }
+
+        .patient-form .radio-group label,
+        .patient-form .checkbox-group label {
+            display: inline;
+            font-weight: normal;
+            margin-right: 15px;
+        }
+
+        /* Submit Button */
+        .patient-form input[type="submit"] {
+            background: #0073aa;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+            width: 100%;
+            max-width: 200px;
+            margin-top: 20px;
+        }
+
+        .patient-form input[type="submit"]:hover {
+            background: #005d82;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .form-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .form-row .field {
+                min-width: 100%;
+            }
+
+            .patient-form {
+                padding: 10px;
+            }
+
+            .patient-form h3 {
+                font-size: 18px;
+            }
+        }
+    </style>
+
+    <div class="patient-form">
+        <form method="post">
+            <!-- Patient Details -->
+            <h3>Patient Details</h3>
+            <div class="form-row">
+                <div class="field">
+                    <label>Name:</label>
+                    <input type="text" name="patient_details[name]" required>
+                </div>
+                <div class="field">
+                    <label>Age:</label>
+                    <input type="text" name="patient_details[age]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <label>Gender:</label>
+                    <select name="patient_details[gender]">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Contact:</label>
+                    <input type="number" name="patient_details[contact]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>Address:</label>
+                    <input type="text" name="patient_details[addresss]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>MRN:</label>
+                    <input type="text" name="patient_details[mrn]">
+                </div>
+            </div>
+
+            <!-- Presenting Complaints -->
+            <h3>Presenting Complaints</h3>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>Complaint:</label>
+                    <select name="presenting_complaints_[complaint][]" multiple>
+                        <option value="Jaundice">Jaundice</option>
+                        <option value="Abdominal Pain">Abdominal Pain</option>
+                        <option value="Pruritus">Pruritus</option>
+                        <option value="Nausea/Vomiting">Nausea/Vomiting</option>
+                        <option value="Fever">Fever</option>
+                        <option value="Weight Loss">Weight Loss</option>
+                        <option value="Pain (Cyclic/Non-Cyclic)">Pain (Cyclic/Non-Cyclic)</option>
+                        <option value="Lump">Lump</option>
+                        <option value="Nipple Discharge">Nipple Discharge</option>
+                        <option value="Skin/Nipple Changes">Skin/Nipple Changes</option>
+                        <option value="Mass">Mass</option>
+                        <option value="Ulcer">Ulcer</option>
+                        <option value="Lymphadenopathy">Lymphadenopathy</option>
+                        <option value="Unexplained Weight Loss">Unexplained Weight Loss</option>
+                        <option value="Constitutional Symptoms">Constitutional Symptoms</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>Duration:</label>
+                    <input type="text" name="presenting_complaints_[duration]">
+                </div>
+            </div>
+
+            <!-- History of Presenting Illnesses -->
+            <h3>History of Presenting Illnesses</h3>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>History:</label>
+                    <textarea name="history_of_presenting_illnesses[history_of_presenting_illnesses]"></textarea>
+                </div>
+            </div>
+
+            <!-- Past Medical History -->
+            <h3>Past Medical History</h3>
+            <div class="form-row">
+                <div class="field">
+                    <label>Past Medical History:</label>
+                    <select name="past_medical_history[past_medical_history]">
+                        <option value="Diabetes">Diabetes</option>
+                        <option value="Hypertension">Hypertension</option>
+                        <option value="Hepatitis B/C">Hepatitis B/C</option>
+                        <option value="Cirrhosis">Cirrhosis</option>
+                        <option value="Pancreatitis">Pancreatitis</option>
+                        <option value="Malignany">Malignany</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Others:</label>
+                    <input type="text" name="past_medical_history[others]">
+                </div>
+            </div>
+            <div class="radio-group">
+                <label>Chemotherapy:</label>
+                <input type="radio" name="past_medical_history[chemotherapy]" value="Yes"> Yes
+                <input type="radio" name="past_medical_history[chemotherapy]" value="No"> No
+            </div>
+            <div class="radio-group">
+                <label>Radiotherapy:</label>
+                <input type="radio" name="past_medical_history[Radiotherapy]" value="Yes"> Yes
+                <input type="radio" name="past_medical_history[Radiotherapy]" value="No"> No
+            </div>
+            <div class="radio-group">
+                <label>Immunotherapy:</label>
+                <input type="radio" name="past_medical_history[Immunotherapy]" value="Yes"> Yes
+                <input type="radio" name="past_medical_history[Immunotherapy]" value="No"> No
+            </div>
+
+            <!-- Past Surgical History -->
+            <h3>Past Surgical History</h3>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>Past Surgical History:</label>
+                    <select name="past_surgical_history[past_surgical_history][]" multiple>
+                        <option value="Lumpectomy">Lumpectomy</option>
+                        <option value="Mastectomy">Mastectomy</option>
+                        <option value="SLNB">SLNB</option>
+                        <option value="MRM">MRM</option>
+                        <option value="Cholecystectomy">Cholecystectomy</option>
+                        <option value="Hepatectomy">Hepatectomy</option>
+                        <option value="Whipple">Whipple</option>
+                        <option value="Biliary Drainage">Biliary Drainage</option>
+                        <option value="Resection">Resection</option>
+                        <option value="Debulking">Debulking</option>
+                        <option value="Palliative Surgery">Palliative Surgery</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <label>Date of Surgery:</label>
+                    <input type="datetime-local" name="past_surgical_history[date_of_surgery]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>Intra Operative Findings:</label>
+                    <textarea name="past_surgical_history[intra_operative_findings]"></textarea>
+                </div>
+            </div>
+
+            <!-- Family History -->
+            <h3>Family History</h3>
+            <div class="form-row">
+                <div class="field">
+                    <label>Family History:</label>
+                    <select name="family_history[family_history]">
+                        <option value="Diabetes">Diabetes</option>
+                        <option value="Hypertension">Hypertension</option>
+                        <option value="Tb Malignancy">Tb Malignancy</option>
+                        <option value="Any congenital problem">Any congenital problem</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Others:</label>
+                    <input type="text" name="family_history[family_history_others]">
+                </div>
+            </div>
+
+            <!-- Social History -->
+            <h3>Social History</h3>
+            <div class="form-row">
+                <div class="field">
+                    <label>Social History:</label>
+                    <select name="social_history_">
+                        <option value="Poor">Poor</option>
+                        <option value="Middle Class">Middle Class</option>
+                        <option value="High Class">High Class</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Risk Factors -->
+            <h3>Risk Factors</h3>
+            <div class="form-row">
+                <div class="field">
+                    <label>Risk Factors:</label>
+                    <select name="risk_factors_others[risk_factors]">
+                        <option value="Smoking">Smoking</option>
+                        <option value="Alcohol">Alcohol</option>
+                        <option value="Hormonal Therapy">Hormonal Therapy</option>
+                        <option value="Blood Transfusion">Blood Transfusion</option>
+                        <option value="Occupational Exposure">Occupational Exposure</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Others:</label>
+                    <input type="text" name="risk_factors_others[risk_factors_others]">
+                </div>
+            </div>
+
+            <!-- Examination -->
+            <h3>Examination</h3>
+            <div class="form-row">
+                <div class="field">
+                    <label>Vitals T (°C):</label>
+                    <input type="text" name="examination[vitals:_t:_°c]">
+                </div>
+                <div class="field">
+                    <label>BP:</label>
+                    <input type="text" name="examination[bp]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <label>HR:</label>
+                    <input type="text" name="examination[hr]">
+                </div>
+                <div class="field">
+                    <label>RR:</label>
+                    <input type="text" name="examination[rr]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>General Physical Exam:</label>
+                    <select name="examination[general_physical_exam_][]" multiple>
+                        <option value="Pallor">Pallor</option>
+                        <option value="Jaundice">Jaundice</option>
+                        <option value="Leuconychia">Leuconychia</option>
+                        <option value="Koilonychias">Koilonychias</option>
+                        <option value="Lymphadenopathy">Lymphadenopathy</option>
+                        <option value="Edema">Edema</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>Inspection:</label>
+                    <textarea name="examination[inspection]"></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>Palpation:</label>
+                    <textarea name="examination[palpation]"></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>Percussion:</label>
+                    <textarea name="examination[percussion]"></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>Auscultation:</label>
+                    <textarea name="examination[auscultation]"></textarea>
+                </div>
+            </div>
+
+            <!-- Breast Exam -->
+            <h4>Breast Exam</h4>
+            <div class="form-row">
+                <div class="field">
+                    <label>Lump Size (cm):</label>
+                    <input type="text" name="examination[breast_exam][lump_size_cm]">
+                </div>
+                <div class="field">
+                    <label>Consistency:</label>
+                    <input type="text" name="examination[breast_exam][consistency]">
+                </div>
+            </div>
+            <div class="checkbox-group">
+                <label>Breast Exam:</label>
+                <input type="checkbox" name="examination[breast_exam][breast_exam][]" value="Axillary LNs"> Axillary LNs
+                <input type="checkbox" name="examination[breast_exam][breast_exam][]" value="Ulceration"> Ulceration
+                <input type="checkbox" name="examination[breast_exam][breast_exam][]" value="Nipple Retraction"> Nipple Retraction
+            </div>
+            <div class="checkbox-group">
+                <label>Abdomen Exam:</label>
+                <input type="checkbox" name="examination[breast_exam][abdomen_exam][]" value="Tenderness"> Tenderness
+                <input type="checkbox" name="examination[breast_exam][abdomen_exam][]" value="Mass"> Mass
+                <input type="checkbox" name="examination[breast_exam][abdomen_exam][]" value="Hepatomegaly"> Hepatomegaly
+                <input type="checkbox" name="examination[breast_exam][abdomen_exam][]" value="Ascites"> Ascites
+            </div>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>Respiratory Examination:</label>
+                    <textarea name="examination[breast_exam][respiratory_examination]"></textarea>
+                </div>
+            </div>
+
+            <!-- If Tumor Present -->
+            <h4>If Tumor Present Then</h4>
+            <div class="form-row">
+                <div class="field">
+                    <label>Tumor Size (cm):</label>
+                    <input type="text" name="examination[breast_exam][if_tumor_present_then][tumor_size_cm]">
+                </div>
+            </div>
+            <div class="radio-group">
+                <label>Local Invasion:</label>
+                <input type="radio" name="examination[breast_exam][if_tumor_present_then][local_invasion]" value="Yes"> Yes
+                <input type="radio" name="examination[breast_exam][if_tumor_present_then][local_invasion]" value="No"> No
+            </div>
+            <div class="radio-group">
+                <label>Lymph Node Status:</label>
+                <input type="radio" name="examination[breast_exam][if_tumor_present_then][lymph_node_status]" value="Mobile"> Mobile
+                <input type="radio" name="examination[breast_exam][if_tumor_present_then][lymph_node_status]" value="Fixed"> Fixed
+                <input type="radio" name="examination[breast_exam][if_tumor_present_then][lymph_node_status]" value="Supraclavicular"> Supraclavicular
+            </div>
+
+            <!-- Investigations -->
+            <h3>Investigations</h3>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>Laboratory Tests:</label>
+                    <input type="text" name="investigations[laboratory_tests]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <label>HB:</label>
+                    <input type="text" name="investigations[hb]">
+                </div>
+                <div class="field">
+                    <label>Plt:</label>
+                    <input type="text" name="investigations[plt]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <label>Bilirubin Total:</label>
+                    <input type="text" name="investigations[bilirubin_total]">
+                </div>
+                <div class="field">
+                    <label>Direct Bilirubin:</label>
+                    <input type="text" name="investigations[direct_billirubin]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <label>Indirect Bilirubin:</label>
+                    <input type="text" name="investigations[indirect_billirubin_]">
+                </div>
+                <div class="field">
+                    <label>ALT:</label>
+                    <input type="text" name="investigations[alt]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <label>AST:</label>
+                    <input type="text" name="investigations[ast]">
+                </div>
+                <div class="field">
+                    <label>ALP:</label>
+                    <input type="text" name="investigations[alp]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <label>Albumin:</label>
+                    <input type="text" name="investigations[albumin]">
+                </div>
+            </div>
+            <div class="radio-group">
+                <label>Biopsy/FNAC:</label>
+                <input type="radio" name="investigations[biopsyfnac]" value="Yes"> Yes
+                <input type="radio" name="investigations[biopsyfnac]" value="No"> No
+            </div>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>Histopathology Report:</label>
+                    <textarea name="investigations[histopathology_report]"></textarea>
+                </div>
+            </div>
+            <div class="checkbox-group">
+                <label>Tumor Markers:</label>
+                <input type="checkbox" name="investigations[tumor_markers][]" value="AFP"> AFP
+                <input type="checkbox" name="investigations[tumor_markers][]" value="CEA"> CEA
+                <input type="checkbox" name="investigations[tumor_markers][]" value="CA 19-9"> CA 19-9
+                <input type="checkbox" name="investigations[tumor_markers][]" value="ER"> ER
+                <input type="checkbox" name="investigations[tumor_markers][]" value="PR"> PR
+                <input type="checkbox" name="investigations[tumor_markers][]" value="HER2"> HER2
+                <input type="checkbox" name="investigations[tumor_markers][]" value="Ki-67"> Ki-67
+            </div>
+
+            <!-- Imaging Studies & Findings -->
+            <h3>Imaging Studies & Findings</h3>
+            <div class="form-row">
+                <div class="field">
+                    <div class="checkbox-group">
+                        <label>Ultrasound (USG):</label>
+                        <input type="checkbox" name="imaging_studies_&_findings_[ultrasound_usg][]" value="Yes"> Yes
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Ultrasound Result:</label>
+                    <input type="text" name="imaging_studies_&_findings_[Ultrasound_Result]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <div class="checkbox-group">
+                        <label>CT Scan:</label>
+                        <input type="checkbox" name="imaging_studies_&_findings_[ct_scan][]" value="Yes"> Yes
+                    </div>
+                </div>
+                <div class="field">
+                    <label>CT Scan Result:</label>
+                    <input type="text" name="imaging_studies_&_findings_[ct_scan_result]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <div class="checkbox-group">
+                        <label>MRI:</label>
+                        <input type="checkbox" name="imaging_studies_&_findings_[mri][]" value="Yes"> Yes
+                    </div>
+                </div>
+                <div class="field">
+                    <label>MRI Result:</label>
+                    <input type="text" name="imaging_studies_&_findings_[mri_result]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <div class="checkbox-group">
+                        <label>MRCP:</label>
+                        <input type="checkbox" name="imaging_studies_&_findings_[mrcp][]" value="Yes"> Yes
+                    </div>
+                </div>
+                <div class="field">
+                    <label>MRCP Result:</label>
+                    <input type="text" name="imaging_studies_&_findings_[mrcp_result]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <div class="checkbox-group">
+                        <label>ERCP:</label>
+                        <input type="checkbox" name="imaging_studies_&_findings_[ercp][]" value="Yes"> Yes
+                    </div>
+                </div>
+                <div class="field">
+                    <label>ERCP Result:</label>
+                    <input type="text" name="imaging_studies_&_findings_[ercp_result]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <div class="checkbox-group">
+                        <label>PET-CT:</label>
+                        <input type="checkbox" name="imaging_studies_&_findings_[pet-ct][]" value="Yes"> Yes
+                    </div>
+                </div>
+                <div class="field">
+                    <label>PET-CT Result:</label>
+                    <input type="text" name="imaging_studies_&_findings_[pet-ct_result]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <div class="checkbox-group">
+                        <label>Mammogram:</label>
+                        <input type="checkbox" name="imaging_studies_&_findings_[mammogram][]" value="Yes"> Yes
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Mammogram Result:</label>
+                    <input type="text" name="imaging_studies_&_findings_[mammogram_result]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <div class="checkbox-group">
+                        <label>Other:</label>
+                        <input type="checkbox" name="imaging_studies_&_findings_[other][]" value="Yes"> Yes
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Other Result:</label>
+                    <input type="text" name="imaging_studies_&_findings_[other_result]">
+                </div>
+            </div>
+
+            <!-- Imaging Findings -->
+            <h3>Imaging Findings</h3>
+            <!-- Hepatobiliary & Pancreatic Findings -->
+            <h4>Hepatobiliary & Pancreatic Findings</h4>
+            <div class="form-row">
+                <div class="field">
+                    <div class="radio-group">
+                        <label>Liver Lesion:</label>
+                        <input type="radio" name="imaging_findings[hepatobiliary_&_pancreatic_findings][liver_lesion]" value="Yes"> Yes
+                        <input type="radio" name="imaging_findings[hepatobiliary_&_pancreatic_findings][liver_lesion]" value="No"> No
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Size (cm):</label>
+                    <input type="text" name="imaging_findings[hepatobiliary_&_pancreatic_findings][size_cm]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>Location:</label>
+                    <input type="text" name="imaging_findings[hepatobiliary_&_pancreatic_findings][location]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <div class="radio-group">
+                        <label>Biliary Obstruction:</label>
+                        <input type="radio" name="imaging_findings[hepatobiliary_&_pancreatic_findings][biliary_obstruction]" value="Yes"> Yes
+                        <input type="radio" name="imaging_findings[hepatobiliary_&_pancreatic_findings][biliary_obstruction]" value="No"> No
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Level:</label>
+                    <input type="text" name="imaging_findings[hepatobiliary_&_pancreatic_findings][level]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <div class="radio-group">
+                        <label>Pancreatic Mass:</label>
+                        <input type="radio" name="imaging_findings[hepatobiliary_&_pancreatic_findings][pancreatic_mass]" value="Yes"> Yes
+                        <input type="radio" name="imaging_findings[hepatobiliary_&_pancreatic_findings][pancreatic_mass]" value="No"> No
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Size (cm):</label>
+                    <input type="text" name="imaging_findings[hepatobiliary_&_pancreatic_findings][size_cm]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>Description:</label>
+                    <input type="text" name="imaging_findings[hepatobiliary_&_pancreatic_findings][description]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <div class="radio-group">
+                        <label>Metastasis:</label>
+                        <input type="radio" name="imaging_findings[hepatobiliary_&_pancreatic_findings][metastasis]" value="Yes"> Yes
+                        <input type="radio" name="imaging_findings[hepatobiliary_&_pancreatic_findings][metastasis]" value="No"> No
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Site:</label>
+                    <input type="text" name="imaging_findings[hepatobiliary_&_pancreatic_findings][site]">
+                </div>
+            </div>
+
+            <!-- Breast Imaging Findings -->
+            <h4>Breast Imaging Findings</h4>
+            <div class="form-row">
+                <div class="field">
+                    <div class="radio-group">
+                        <label>Mass:</label>
+                        <input type="radio" name="imaging_findings[breast_imaging_findings][mass]" value="Yes"> Yes
+                        <input type="radio" name="imaging_findings[breast_imaging_findings][mass]" value="No"> No
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Size (cm):</label>
+                    <input type="text" name="imaging_findings[breast_imaging_findings][size_cm]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>Location:</label>
+                    <input type="text" name="imaging_findings[breast_imaging_findings][location]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <div class="radio-group">
+                        <label>Microcalcifications:</label>
+                        <input type="radio" name="imaging_findings[breast_imaging_findings][microcalcifications]" value="Yes"> Yes
+                        <input type="radio" name="imaging_findings[breast_imaging_findings][microcalcifications]" value="No"> No
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <div class="radio-group">
+                        <label>Lymph Nodes:</label>
+                        <input type="radio" name="imaging_findings[breast_imaging_findings][lymph_nodes]" value="Normal"> Normal
+                        <input type="radio" name="imaging_findings[breast_imaging_findings][lymph_nodes]" value="Enlarged (Axillary/Supraclavicular)"> Enlarged (Axillary/Supraclavicular)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Oncology-Specific Findings -->
+            <h4>Oncology-Specific Findings</h4>
+            <div class="form-row">
+                <div class="field">
+                    <div class="radio-group">
+                        <label>Primary Tumor:</label>
+                        <input type="radio" name="imaging_findings[oncology-specific_findings][primary_tumor]" value="Localized"> Localized
+                        <input type="radio" name="imaging_findings[oncology-specific_findings][primary_tumor]" value="Invasive"> Invasive
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <div class="radio-group">
+                        <label>Distant Metastasis:</label>
+                        <input type="radio" name="imaging_findings[oncology-specific_findings][distant_metastasis]" value="Yes"> Yes
+                        <input type="radio" name="imaging_findings[oncology-specific_findings][distant_metastasis]" value="No"> No
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Site:</label>
+                    <input type="text" name="imaging_findings[oncology-specific_findings][site]">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <div class="radio-group">
+                        <label>Lymph Node Involvement:</label>
+                        <input type="radio" name="imaging_findings[oncology-specific_findings][lymph_nodes]" value="Yes"> Yes
+                        <input type="radio" name="imaging_findings[oncology-specific_findings][lymph_nodes]" value="No"> No
+                    </div>
+                </div>
+            </div>
+
+            <!-- Staging (TNM Classification) -->
+            <h3>Staging (TNM Classification)</h3>
+            <div class="form-row">
+                <div class="field">
+                    <label>Tumor (T):</label>
+                    <input type="text" name="staging_tnm_classification_[tumor_t]">
+                </div>
+                <div class="field">
+                    <label>Nodes (N):</label>
+                    <input type="text" name="staging_tnm_classification_[nodes_n]">
+                </div>
+                <div class="field">
+                    <label>Metastasis (M):</label>
+                    <input type="text" name="staging_tnm_classification_[metastasis_m]">
+                </div>
+            </div>
+
+            <!-- Diagnosis -->
+            <h3>Diagnosis</h3>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>Type:</label>
+                    <textarea name="diagnosis[type]"></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>Diagnosis:</label>
+                    <textarea name="diagnosis[diagnosis]"></textarea>
+                </div>
+            </div>
+
+            <!-- Referral To -->
+            <h3>Referral To</h3>
+            <div class="checkbox-group">
+                <label>Referral To:</label>
+                <input type="checkbox" name="referral_to[]" value="Oncologist"> Oncologist
+                <input type="checkbox" name="referral_to[]" value="Other"> Other
+            </div>
+
+            <!-- Follow-Up Plan -->
+            <h3>Follow-Up Plan</h3>
+            <div class="form-row">
+                <div class="field full-width">
+                    <label>Follow-Up Plan:</label>
+                    <textarea name="follow-up_plan"></textarea>
+                </div>
+            </div>
+
+            <input type="submit" name="submit_patient" value="Submit">
+        </form>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('patient_form', 'patient_submission_form');
+
+function handle_patient_submission() {
+    if (isset($_POST['submit_patient'])) {
+        $post_id = wp_insert_post([
+            'post_title'   => sanitize_text_field($_POST['patient_details']['name']),
+            'post_type'    => 'patients',
+            'post_status'  => 'publish'
+        ]);
+
+        if ($post_id) {
+            // Patient Details
+            update_field('patient_details', [
+                'name' => sanitize_text_field($_POST['patient_details']['name']),
+                'age' => sanitize_text_field($_POST['patient_details']['age']),
+                'gender' => $_POST['patient_details']['gender'],
+                'contact' => sanitize_text_field($_POST['patient_details']['contact']),
+                'addresss' => sanitize_text_field($_POST['patient_details']['addresss']),
+                'mrn' => sanitize_text_field($_POST['patient_details']['mrn']),
+            ], $post_id);
+
+            // Presenting Complaints
+            update_field('presenting_complaints_', [
+                'complaint' => $_POST['presenting_complaints_']['complaint'],
+                'duration' => sanitize_text_field($_POST['presenting_complaints_']['duration']),
+            ], $post_id);
+
+            // History of Presenting Illnesses
+            update_field('history_of_presenting_illnesses', [
+                'history_of_presenting_illnesses' => sanitize_textarea_field($_POST['history_of_presenting_illnesses']['history_of_presenting_illnesses']),
+            ], $post_id);
+
+            // Past Medical History
+            update_field('past_medical_history', [
+                'past_medical_history' => $_POST['past_medical_history']['past_medical_history'],
+                'chemotherapy' => $_POST['past_medical_history']['chemotherapy'],
+                'Radiotherapy' => $_POST['past_medical_history']['Radiotherapy'],
+                'Immunotherapy' => $_POST['past_medical_history']['Immunotherapy'],
+                'others' => sanitize_text_field($_POST['past_medical_history']['others']),
+            ], $post_id);
+
+            // Past Surgical History
+            update_field('past_surgical_history', [
+                'past_surgical_history' => $_POST['past_surgical_history']['past_surgical_history'],
+                'date_of_surgery' => $_POST['past_surgical_history']['date_of_surgery'],
+                'intra_operative_findings' => sanitize_textarea_field($_POST['past_surgical_history']['intra_operative_findings']),
+            ], $post_id);
+
+            // Family History
+            update_field('family_history', [
+                'family_history' => $_POST['family_history']['family_history'],
+                'family_history_others' => sanitize_text_field($_POST['family_history']['family_history_others']),
+            ], $post_id);
+
+            // Social History
+            update_field('social_history_', $_POST['social_history_'], $post_id);
+
+            // Risk Factors
+            update_field('risk_factors_others', [
+                'risk_factors' => $_POST['risk_factors_others']['risk_factors'],
+                'risk_factors_others' => sanitize_text_field($_POST['risk_factors_others']['risk_factors_others']),
+            ], $post_id);
+
+            // Examination
+            update_field('examination', [
+                'vitals:_t:_°c' => sanitize_text_field($_POST['examination']['vitals:_t:_°c']),
+                'bp' => sanitize_text_field($_POST['examination']['bp']),
+                'hr' => sanitize_text_field($_POST['examination']['hr']),
+                'rr' => sanitize_text_field($_POST['examination']['rr']),
+                'general_physical_exam_' => $_POST['examination']['general_physical_exam_'],
+                'inspection' => sanitize_textarea_field($_POST['examination']['inspection']),
+                'palpation' => sanitize_textarea_field($_POST['examination']['palpation']),
+                'percussion' => sanitize_textarea_field($_POST['examination']['percussion']),
+                'auscultation' => sanitize_textarea_field($_POST['examination']['auscultation']),
+                'breast_exam' => [
+                    'lump_size_cm' => sanitize_text_field($_POST['examination']['breast_exam']['lump_size_cm']),
+                    'consistency' => sanitize_text_field($_POST['examination']['breast_exam']['consistency']),
+                    'breast_exam' => $_POST['examination']['breast_exam']['breast_exam'],
+                    'abdomen_exam' => $_POST['examination']['breast_exam']['abdomen_exam'],
+                    'respiratory_examination' => sanitize_textarea_field($_POST['examination']['breast_exam']['respiratory_examination']),
+                    'if_tumor_present_then' => [
+                        'tumor_size_cm' => sanitize_text_field($_POST['examination']['breast_exam']['if_tumor_present_then']['tumor_size_cm']),
+                        'local_invasion' => $_POST['examination']['breast_exam']['if_tumor_present_then']['local_invasion'],
+                        'lymph_node_status' => $_POST['examination']['breast_exam']['if_tumor_present_then']['lymph_node_status'],
+                    ],
+                ],
+            ], $post_id);
+
+            // Investigations
+            update_field('investigations', [
+                'laboratory_tests' => sanitize_text_field($_POST['investigations']['laboratory_tests']),
+                'hb' => sanitize_text_field($_POST['investigations']['hb']),
+                'plt' => sanitize_text_field($_POST['investigations']['plt']),
+                'bilirubin_total' => sanitize_text_field($_POST['investigations']['bilirubin_total']),
+                'direct_billirubin' => sanitize_text_field($_POST['investigations']['direct_billirubin']),
+                'indirect_billirubin_' => sanitize_text_field($_POST['investigations']['indirect_billirubin_']),
+                'alt' => sanitize_text_field($_POST['investigations']['alt']),
+                'ast' => sanitize_text_field($_POST['investigations']['ast']),
+                'alp' => sanitize_text_field($_POST['investigations']['alp']),
+                'albumin' => sanitize_text_field($_POST['investigations']['albumin']),
+                'biopsyfnac' => $_POST['investigations']['biopsyfnac'],
+                'histopathology_report' => sanitize_textarea_field($_POST['investigations']['histopathology_report']),
+                'tumor_markers' => $_POST['investigations']['tumor_markers'],
+            ], $post_id);
+
+            // Imaging Studies & Findings
+            update_field('imaging_studies_&_findings_', [
+                'ultrasound_usg' => $_POST['imaging_studies_&_findings_']['ultrasound_usg'],
+                'Ultrasound_Result' => sanitize_text_field($_POST['imaging_studies_&_findings_']['Ultrasound_Result']),
+                'ct_scan' => $_POST['imaging_studies_&_findings_']['ct_scan'],
+                'ct_scan_result' => sanitize_text_field($_POST['imaging_studies_&_findings_']['ct_scan_result']),
+                'mri' => $_POST['imaging_studies_&_findings_']['mri'],
+                'mri_result' => sanitize_text_field($_POST['imaging_studies_&_findings_']['mri_result']),
+                'mrcp' => $_POST['imaging_studies_&_findings_']['mrcp'],
+                'mrcp_result' => sanitize_text_field($_POST['imaging_studies_&_findings_']['mrcp_result']),
+                'ercp' => $_POST['imaging_studies_&_findings_']['ercp'],
+                'ercp_result' => sanitize_text_field($_POST['imaging_studies_&_findings_']['ercp_result']),
+                'pet-ct' => $_POST['imaging_studies_&_findings_']['pet-ct'],
+                'pet-ct_result' => sanitize_text_field($_POST['imaging_studies_&_findings_']['pet-ct_result']),
+                'mammogram' => $_POST['imaging_studies_&_findings_']['mammogram'],
+                'mammogram_result' => sanitize_text_field($_POST['imaging_studies_&_findings_']['mammogram_result']),
+                'other' => $_POST['imaging_studies_&_findings_']['other'],
+                'other_result' => sanitize_text_field($_POST['imaging_studies_&_findings_']['other_result']),
+            ], $post_id);
+
+            // Imaging Findings
+            update_field('imaging_findings', [
+                'hepatobiliary_&_pancreatic_findings' => [
+                    'liver_lesion' => $_POST['imaging_findings']['hepatobiliary_&_pancreatic_findings']['liver_lesion'],
+                    'size_cm' => sanitize_text_field($_POST['imaging_findings']['hepatobiliary_&_pancreatic_findings']['size_cm']),
+                    'location' => sanitize_text_field($_POST['imaging_findings']['hepatobiliary_&_pancreatic_findings']['location']),
+                    'biliary_obstruction' => $_POST['imaging_findings']['hepatobiliary_&_pancreatic_findings']['biliary_obstruction'],
+                    'level' => sanitize_text_field($_POST['imaging_findings']['hepatobiliary_&_pancreatic_findings']['level']),
+                    'pancreatic_mass' => $_POST['imaging_findings']['hepatobiliary_&_pancreatic_findings']['pancreatic_mass'],
+                    'size_cm' => sanitize_text_field($_POST['imaging_findings']['hepatobiliary_&_pancreatic_findings']['size_cm']),
+                    'description' => sanitize_text_field($_POST['imaging_findings']['hepatobiliary_&_pancreatic_findings']['description']),
+                    'metastasis' => $_POST['imaging_findings']['hepatobiliary_&_pancreatic_findings']['metastasis'],
+                    'site' => sanitize_text_field($_POST['imaging_findings']['hepatobiliary_&_pancreatic_findings']['site']),
+                ],
+                'breast_imaging_findings' => [
+                    'mass' => $_POST['imaging_findings']['breast_imaging_findings']['mass'],
+                    'size_cm' => sanitize_text_field($_POST['imaging_findings']['breast_imaging_findings']['size_cm']),
+                    'location' => sanitize_text_field($_POST['imaging_findings']['breast_imaging_findings']['location']),
+                    'microcalcifications' => $_POST['imaging_findings']['breast_imaging_findings']['microcalcifications'],
+                    'lymph_nodes' => $_POST['imaging_findings']['breast_imaging_findings']['lymph_nodes'],
+                ],
+                'oncology-specific_findings' => [
+                    'primary_tumor' => $_POST['imaging_findings']['oncology-specific_findings']['primary_tumor'],
+                    'distant_metastasis' => $_POST['imaging_findings']['oncology-specific_findings']['distant_metastasis'],
+                    'site' => sanitize_text_field($_POST['imaging_findings']['oncology-specific_findings']['site']),
+                    'lymph_nodes' => $_POST['imaging_findings']['oncology-specific_findings']['lymph_nodes'],
+                ],
+            ], $post_id);
+
+            // Staging (TNM Classification)
+            update_field('staging_tnm_classification_', [
+                'tumor_t' => sanitize_text_field($_POST['staging_tnm_classification_']['tumor_t']),
+                'nodes_n' => sanitize_text_field($_POST['staging_tnm_classification_']['nodes_n']),
+                'metastasis_m' => sanitize_text_field($_POST['staging_tnm_classification_']['metastasis_m']),
+            ], $post_id);
+
+            // Diagnosis
+            update_field('diagnosis', [
+                'type' => sanitize_textarea_field($_POST['diagnosis']['type']),
+                'diagnosis' => sanitize_textarea_field($_POST['diagnosis']['diagnosis']),
+            ], $post_id);
+
+            // Referral To
+            update_field('referral_to', $_POST['referral_to'], $post_id);
+
+            // Follow-Up Plan
+            update_field('follow-up_plan', sanitize_textarea_field($_POST['follow-up_plan']), $post_id);
+        }
+    }
+}
+add_action('init', 'handle_patient_submission');
